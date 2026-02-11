@@ -190,23 +190,17 @@ const freelanceProjects: LargeProject[] = [
     {
         title: "Portfolio Profile (Current)",
         description: "The current portfolio website you're viewing right now! Built with Next.js 15, featuring metallic textures, 3D effects, animated gradients, and a comprehensive showcase of my work.",
-        github: "https://github.com/harrshita123/Portfolio-Profile",
+        github: "https://github.com/harrshita123/Portfolio-Website",
         tags: ["personal", "portfolio", "nextjs", "framer-motion", "3D", "animations", "modern"],
         visual: (
-            <div className="w-full h-full bg-[#0a0a0a] relative flex items-center justify-center overflow-hidden border-r border-white/5">
-                <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:20px_20px]" />
-                <div className="z-10 text-center">
-                    <div className="inline-block px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] text-white/50 mb-2">
-                        Hi, I am Harshita Yadav
-                    </div>
-                    <div className="w-20 h-2 bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-400 rounded-full mx-auto" />
-                </div>
-                {/* Decorative code lines */}
-                <div className="absolute top-4 left-4 space-y-1 opacity-20 hidden md:block">
-                    <div className="w-12 h-1 bg-white/50 rounded-full" />
-                    <div className="w-8 h-1 bg-white/30 rounded-full ml-2" />
-                    <div className="w-16 h-1 bg-white/40 rounded-full" />
-                </div>
+            <div className="w-full h-full relative overflow-hidden bg-[#0a0a0a]">
+                <Image
+                    src="/portfolio.png"
+                    alt="Portfolio Website"
+                    fill
+                    className="object-cover opacity-90 group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
             </div>
         )
     }
