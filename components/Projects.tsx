@@ -81,7 +81,7 @@ const projects: Project[] = [
     {
         title: "News Reader UI",
         description: "A sleek and modern news reading interface featuring categorized headlines, immersive reading mode, and responsive design.",
-        link: "https://github.com/harrshita123/News-Reader-UI",
+        link: "https://github.com/harrshita123/NEXT-reader",
         linkText: "GitHub",
         status: "https://next-read-ojt.vercel.app/",
         colSpan: "md:col-span-2",
