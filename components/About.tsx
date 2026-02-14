@@ -105,7 +105,7 @@ export default function About() {
 
                             <div className="space-y-6 text-gray-300 text-lg leading-relaxed font-light">
                                 <p>
-                                    I am a motivated <span className="text-blue-500 font-bold">first-year Integrated B.Tech Computer Science (AI & ML)</span> student.
+                                    I am a motivated <span className="text-blue-500 font-bold">B.Tech Computer Science (AI & ML)</span> student.
                                 </p>
                                 <p>
                                     Passionate about <span className="text-blue-500 font-bold">Artificial Intelligence, Machine Learning, Robotics</span>, and <span className="text-blue-500 font-bold">Full-Stack Web Development</span>, with a strong interest in building real-world, impact-driven solutions.
