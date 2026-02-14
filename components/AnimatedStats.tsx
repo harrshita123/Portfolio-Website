@@ -78,7 +78,7 @@ export default function AnimatedStats() {
 
                 // Fetch Stars
                 try {
-                    const starsResponse = await fetch(`https://api.github.com/search/repositories?q=user:${username}&per_page=100`);
+                    const starsResponse = await fetch(`https://api.github.com/search/repositories?q=user:${username}+fork:true&per_page=100`);
                     if (starsResponse.ok) {
                         const starsData = await starsResponse.json();
                         const stars = starsData.items.reduce((acc: number, repo: any) => acc + repo.stargazers_count, 0);
