@@ -63,7 +63,7 @@ export default function CodeCard() {
                         <span className="text-green-400 font-bold">npm run intro</span>
                     </div>
                     <div className="mt-1 text-white font-bold">
-                        + version@21.3.18
+                        + Harshita@21.3.18
                     </div>
                     <div className="text-white mt-1 leading-relaxed">
                         Robotics Enthusiast • Open Source Contributor • Full-Stack
