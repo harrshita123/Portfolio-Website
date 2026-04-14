@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 import AudioProfile from "./AudioProfile";
 
-
+export default function About() {
     return (
         <section id="about" className="py-20 relative">
             <div className="container mx-auto px-6">
