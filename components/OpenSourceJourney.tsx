@@ -154,7 +154,7 @@ const milestones: JourneyMilestone[] = [
                 title: "Proposals",
                 icon: <FileText className="h-4 w-4" />,
                 links: [
-                    { label: "Dart", url: "https://docs.google.com/document/d/1F92eo7HxWJvFqazYIH-JMGOTq6dmt2TnaksNsKG0SAg/edit?tab=t.0#heading=h.ll4uylj8nwu" },
+                    { label: "Dart", url: "https://docs.google.com/document/d/1F92eo7HxWJvFqazYIH-JMGOTq6dmt2TnaksNsKG0SAg/edit?tab=t.0" },
                     { label: "SageMath I", url: "https://docs.google.com/document/d/14CdvbBWMg9rXSVvlmBlMPqkc7WRQ3VxvMamJlhEyaQU/edit?tab=t.0" },
                     { label: "SageMath II", url: "https://docs.google.com/document/d/13nBvPbuz4XIDxMVtBpzsC0-sfOBwQNFQmfTXa2qxaC0/edit?tab=t.0" },
                 ],

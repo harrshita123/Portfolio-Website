@@ -8,9 +8,10 @@ interface StatItemProps {
     label: string;
     suffix?: string;
     prefix?: string;
+    className?: string;
 }
 
-function StatItem({ value, label, suffix = "", prefix = "" }: StatItemProps) {
+function StatItem({ value, label, suffix = "", prefix = "", className = "" }: StatItemProps) {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: "-100px" });
     const spring = useSpring(0, { bounce: 0, duration: 2000 });
@@ -30,12 +31,12 @@ function StatItem({ value, label, suffix = "", prefix = "" }: StatItemProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.5 }}
-            className="text-center"
+            className={`min-w-0 text-center ${className}`}
         >
-            <motion.div className="text-4xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">
+            <motion.div className="text-3xl sm:text-4xl xl:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500 tabular-nums">
                 {value === null ? "..." : display}
             </motion.div>
-            <div className="text-white/60 text-sm mt-2">{label}</div>
+            <div className="text-white/60 text-xs sm:text-sm mt-2">{label}</div>
         </motion.div>
     );
 }
@@ -86,13 +87,13 @@ export default function AnimatedStats() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
-            className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8 p-4 lg:p-8 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm"
+            className="grid grid-cols-6 gap-x-3 gap-y-8 p-4 lg:p-8 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm"
         >
-            <StatItem value={stats.repos} label="Repositories" suffix="+" />
-            <StatItem value={stats.contributions} label="Contributions" suffix="+" />
-            <StatItem value={stats.prs} label="Pull Requests" suffix="+" />
-            <StatItem value={stats.issues} label="Issues Raised" suffix="+" />
-            <StatItem value={stats.stars} label="Total Stars" suffix="+" />
+            <StatItem value={stats.repos} label="Repositories" suffix="+" className="col-span-3 sm:col-span-2" />
+            <StatItem value={stats.contributions} label="Contributions" suffix="+" className="col-span-3 sm:col-span-2" />
+            <StatItem value={stats.prs} label="Pull Requests" suffix="+" className="col-span-3 sm:col-span-2" />
+            <StatItem value={stats.issues} label="Issues Raised" suffix="+" className="col-span-3 sm:col-span-2 sm:col-start-2" />
+            <StatItem value={stats.stars} label="Total Stars" suffix="+" className="col-span-6 sm:col-span-2" />
         </motion.div>
     );
 }
