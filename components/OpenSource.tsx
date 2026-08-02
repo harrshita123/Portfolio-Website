@@ -1,8 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Award, ChevronRight, Calendar } from "lucide-react";
+import { Award, Calendar, CircleDot, GitPullRequest } from "lucide-react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 interface Experience {
     title: string;
@@ -12,31 +13,19 @@ interface Experience {
     tags: string[];
     points: string[];
     image: string;
-    credentialsLink: string;
+    imageClassName?: string;
+    workLink: string;
+    githubRepo?: string;
+    showPrCount?: boolean;
+    showIssueCount?: boolean;
     color: string; // Tailwind color name
 }
 
 const experiences: Experience[] = [
     {
-        title: "Dart Language",
-        role: "Contributor - Dart Web",
-        period: "GSoC 2026",
-        description: "Contributing to the Dart language's web libraries and ecosystem to improve web development capabilities.",
-        tags: ["Dart", "Web Assembly", "Compiler", "GSoC"],
-        points: [
-            "Optimized core web libraries for better performance",
-            "Improved JavaScript interop capabilities",
-            "Fixed critical bugs in the web compiler",
-            "Enhanced documentation for web APIs"
-        ],
-        image: "/dart-web.png",
-        credentialsLink: "https://github.com/dart-lang/web",
-        color: "blue"
-    },
-    {
         title: "Google",
-        role: "Contributor - WebCrypto",
-        period: "GSoC 2026",
+        role: "WebCrypto",
+        period: "GSoC",
         description: "Implementing the Web Cryptography API for Dart to enable secure cryptographic operations in web apps.",
         tags: ["Dart", "Cryptography", "Security", "GSoC"],
         points: [
@@ -46,13 +35,53 @@ const experiences: Experience[] = [
             "Improved security features for Dart web apps"
         ],
         image: "/webcrypto.png",
-        credentialsLink: "https://github.com/google/webcrypto.dart",
+        workLink: "https://github.com/google/webcrypto.dart/pulls?q=is%3Apr+author%3Aharrshita123",
+        githubRepo: "google/webcrypto.dart",
+        showPrCount: true,
+        showIssueCount: true,
+        color: "blue"
+    },
+    {
+        title: "Kubernetes SIG UI",
+        role: "Headlamp",
+        period: "LFX",
+        description: "Contributing to Headlamp, an easy-to-use and extensible web interface for managing Kubernetes clusters.",
+        tags: ["LFX", "Kubernetes", "TypeScript", "React", "Cloud Native"],
+        points: [
+            "Contributed to the Headlamp open-source ecosystem",
+            "Worked with a modern React and TypeScript codebase",
+            "Improved Kubernetes-focused user experiences",
+            "Collaborated through community-driven development"
+        ],
+        image: "https://headlamp.dev/img/social-card.png",
+        workLink: "https://github.com/kubernetes-sigs/headlamp/pulls?q=is%3Apr+author%3Aharrshita123",
+        githubRepo: "kubernetes-sigs/headlamp",
+        showPrCount: true,
+        showIssueCount: true,
+        color: "black"
+    },
+    {
+        title: "Dart Language",
+        role: "Dart Web",
+        period: "GSoC",
+        description: "Contributing to the Dart language's web libraries and ecosystem to improve web development capabilities.",
+        tags: ["Dart", "Web Assembly", "Compiler", "GSoC"],
+        points: [
+            "Optimized core web libraries for better performance",
+            "Improved JavaScript interop capabilities",
+            "Fixed critical bugs in the web compiler",
+            "Enhanced documentation for web APIs"
+        ],
+        image: "/dart-web.png",
+        workLink: "https://github.com/dart-lang/web/pulls?q=is%3Apr+author%3Aharrshita123",
+        githubRepo: "dart-lang/web",
+        showPrCount: true,
         color: "blue"
     },
     {
         title: "SageMath",
-        role: "Contributor - SageMath",
-        period: "GSoC 2026",
+        role: "SageMath",
+        period: "GSoC",
         description: "SageMath is a free open-source mathematics software system licensed under the GPL.",
         tags: ["Python", "Mathematics", "Open Source", "GSoC"],
         points: [
@@ -62,44 +91,15 @@ const experiences: Experience[] = [
             "Collaborated with the scientific community"
         ],
         image: "/sageMath.png",
-        credentialsLink: "https://github.com/sagemath/sage",
-        color: "blue"
-    },
-    {
-        title: "CCExtractor",
-        role: "Contributor - TaskWarrior",
-        period: "Summer of Bitcoin",
-        description: "A Flutter frontend for TaskWarrior, a command-line task management tool.",
-        tags: ["Flutter", "Dart", "Task Management", "SoB"],
-        points: [
-            "Developed a modern mobile UI for TaskWarrior",
-            "Implemented data synchronization features",
-            "Improved user experience and accessibility",
-            "Fixed cross-platform compatibility issues"
-        ],
-        image: "/taskwarrior.png",
-        credentialsLink: "https://github.com/CCExtractor/taskwarrior-flutter",
-        color: "black"
-    },
-    {
-        title: "CCExtractor",
-        role: "Contributor - Alarm Clock",
-        period: "Summer of Bitcoin",
-        description: "An advanced, feature-rich alarm clock application built with Flutter.",
-        tags: ["Flutter", "Android", "Mobile", "SoB"],
-        points: [
-            "Implemented complex alarm scheduling logic",
-            "Designed and built custom UI components",
-            "Integrated background services for reliable alarms",
-            "Optimized battery usage"
-        ],
-        image: "/alarm-clock.png",
-        credentialsLink: "https://github.com/CCExtractor/ultimate_alarm_clock",
+        workLink: "https://github.com/sagemath/sage/pulls?q=is%3Apr+author%3Aharrshita123",
+        githubRepo: "sagemath/sage",
+        showPrCount: true,
+        showIssueCount: true,
         color: "blue"
     },
     {
         title: "Caravan",
-        role: "Contributor - Caravan",
+        role: "Caravan",
         period: "Summer of Bitcoin",
         description: "Caravan is a stateless, open-source Bitcoin wallet and coordination software.",
         tags: ["Bitcoin", "React", "Cryptography", "SoB"],
@@ -110,12 +110,89 @@ const experiences: Experience[] = [
             "Contributed to code refactoring and modernization"
         ],
         image: "/caravan.png",
-        credentialsLink: "https://github.com/caravan-bitcoin/caravan",
+        workLink: "https://github.com/caravan-bitcoin/caravan/pulls?q=is%3Apr+author%3Aharrshita123",
+        githubRepo: "caravan-bitcoin/caravan",
+        showPrCount: true,
         color: "black"
+    },
+    {
+        title: "EaseMotion CSS",
+        role: "EaseMotion CSS",
+        period: "GSSoC",
+        description: "Contributing to a zero-dependency, animation-first CSS framework for building expressive interfaces with readable utility classes.",
+        tags: ["GSSoC", "CSS", "Animations", "UI Components"],
+        points: [
+            "Worked with reusable animation utilities",
+            "Supported readable, beginner-friendly class names",
+            "Contributed to a lightweight, zero-dependency framework",
+            "Helped expand its open-source UI ecosystem"
+        ],
+        image: "https://saptarshi-coder.github.io/EaseMotion-css/assets/logo.svg",
+        imageClassName: "object-contain p-8",
+        workLink: "https://github.com/SAPTARSHI-coder/EaseMotion-css/pulls?q=is%3Apr+author%3Aharrshita123",
+        githubRepo: "SAPTARSHI-coder/EaseMotion-css",
+        showPrCount: true,
+        showIssueCount: true,
+        color: "blue"
     }
 ];
 
 export default function OpenSource() {
+    const [prCounts, setPrCounts] = useState<Record<string, number | null>>({});
+    const [issueCounts, setIssueCounts] = useState<Record<string, number | null>>({});
+
+    useEffect(() => {
+        const controller = new AbortController();
+        const trackedRepos = experiences.filter((experience) => experience.showPrCount && experience.githubRepo);
+
+        async function fetchContributionCounts() {
+            const entries = await Promise.all(
+                trackedRepos.map(async (experience) => {
+                    const repo = experience.githubRepo as string;
+
+                    try {
+                        const query = encodeURIComponent(`repo:${repo} is:pr author:harrshita123`);
+                        const issueQuery = encodeURIComponent(`repo:${repo} is:issue author:harrshita123`);
+                        const [prResponse, issueResponse] = await Promise.all([
+                            fetch(`https://api.github.com/search/issues?q=${query}&per_page=1`, {
+                                signal: controller.signal,
+                            }),
+                            experience.showIssueCount
+                                ? fetch(`https://api.github.com/search/issues?q=${issueQuery}&per_page=1`, {
+                                    signal: controller.signal,
+                                })
+                                : Promise.resolve(null),
+                        ]);
+
+                        if (!prResponse.ok || (issueResponse && !issueResponse.ok)) {
+                            return [repo, { prs: null, issues: null }] as const;
+                        }
+
+                        const prData: { total_count?: number } = await prResponse.json();
+                        const issueData: { total_count?: number } | null = issueResponse
+                            ? await issueResponse.json()
+                            : null;
+                        const prCount = typeof prData.total_count === "number" ? prData.total_count : null;
+                        const issueCount = typeof issueData?.total_count === "number" ? issueData.total_count : null;
+
+                        return [repo, { prs: prCount, issues: issueCount }] as const;
+                    } catch {
+                        return [repo, { prs: null, issues: null }] as const;
+                    }
+                })
+            );
+
+            if (!controller.signal.aborted) {
+                setPrCounts(Object.fromEntries(entries.map(([repo, counts]) => [repo, counts.prs])));
+                setIssueCounts(Object.fromEntries(entries.map(([repo, counts]) => [repo, counts.issues])));
+            }
+        }
+
+        fetchContributionCounts();
+
+        return () => controller.abort();
+    }, []);
+
     return (
         <section id="experience" className="py-20 relative">
             <div className="container mx-auto px-6">
@@ -141,8 +218,7 @@ export default function OpenSource() {
                                 desc: "text-blue-100/70",
                                 tag: "bg-blue-500/10 border-blue-400/20 text-blue-100 hover:bg-blue-500/20",
                                 icon: "text-blue-300",
-                                point: "text-blue-100/80",
-                                btn: "text-blue-200 hover:text-white"
+                                point: "text-blue-100/80"
                             },
                             white: {
                                 card: "bg-white/90 backdrop-blur-md border-slate-300",
@@ -151,8 +227,7 @@ export default function OpenSource() {
                                 desc: "text-slate-600",
                                 tag: "bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-200",
                                 icon: "text-slate-500",
-                                point: "text-slate-700",
-                                btn: "text-slate-500 hover:text-slate-900"
+                                point: "text-slate-700"
                             },
                             black: {
                                 card: "bg-black/40 backdrop-blur-md border-white/10",
@@ -161,8 +236,7 @@ export default function OpenSource() {
                                 desc: "text-zinc-400",
                                 tag: "bg-zinc-900/50 border-zinc-800 text-zinc-300 hover:bg-zinc-800",
                                 icon: "text-zinc-500",
-                                point: "text-zinc-400",
-                                btn: "text-zinc-500 hover:text-white"
+                                point: "text-zinc-400"
                             },
                             red: {
                                 card: "bg-[#450a0a]/40 backdrop-blur-md border-red-500/20",
@@ -171,8 +245,7 @@ export default function OpenSource() {
                                 desc: "text-red-100/70",
                                 tag: "bg-red-500/10 border-red-400/20 text-red-100 hover:bg-red-500/20",
                                 icon: "text-red-300",
-                                point: "text-red-100/80",
-                                btn: "text-red-200 hover:text-white"
+                                point: "text-red-100/80"
                             }
                         }[exp.color] || { // Default fallback
                             card: "bg-black/40 backdrop-blur-md border-white/10",
@@ -181,9 +254,10 @@ export default function OpenSource() {
                             desc: "text-zinc-400",
                             tag: "bg-zinc-900/50 border-zinc-800 text-zinc-300 hover:bg-zinc-800",
                             icon: "text-zinc-500",
-                            point: "text-zinc-400",
-                            btn: "text-zinc-500 hover:text-white"
+                            point: "text-zinc-400"
                         };
+                        const prCount = exp.githubRepo ? prCounts[exp.githubRepo] : null;
+                        const issueCount = exp.githubRepo ? issueCounts[exp.githubRepo] : null;
 
                         return (
                             <motion.div
@@ -200,7 +274,8 @@ export default function OpenSource() {
                                         src={exp.image}
                                         alt={exp.title}
                                         fill
-                                        className="object-cover opacity-90 group-hover:scale-105 transition-transform duration-700"
+                                        unoptimized={exp.image.endsWith(".svg")}
+                                        className={`${exp.imageClassName || "object-cover"} opacity-90 group-hover:scale-105 transition-transform duration-700`}
                                     />
                                     <div className={`absolute inset-0 bg-gradient-to-t to-transparent ${styles.overlay}`} />
 
@@ -226,6 +301,33 @@ export default function OpenSource() {
                                         ))}
                                     </div>
 
+                                    {exp.showPrCount && exp.githubRepo && (
+                                        <div className={`flex flex-wrap items-center gap-x-5 gap-y-2 text-sm font-medium ${styles.point}`}>
+                                            <a
+                                                href={exp.workLink}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex items-center gap-2 hover:underline underline-offset-4 transition-colors"
+                                            >
+                                                <GitPullRequest className={`w-4 h-4 ${styles.icon}`} />
+                                                {typeof prCount === "number"
+                                                    ? `${prCount.toLocaleString()} PRs raised`
+                                                    : "PRs raised"}
+                                            </a>
+                                            {typeof issueCount === "number" && issueCount > 0 && (
+                                                <a
+                                                    href={`https://github.com/${exp.githubRepo}/issues?q=is%3Aissue+author%3Aharrshita123`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="flex items-center gap-2 hover:underline underline-offset-4 transition-colors"
+                                                >
+                                                    <CircleDot className={`w-4 h-4 ${styles.icon}`} />
+                                                    {issueCount.toLocaleString()} issues raised
+                                                </a>
+                                            )}
+                                        </div>
+                                    )}
+
                                     <div className="space-y-3 grow">
                                         {exp.points.map((point, i) => (
                                             <div key={i} className="flex gap-3 items-start group/point">
@@ -233,13 +335,6 @@ export default function OpenSource() {
                                                 <p className={`text-sm transition-colors ${styles.point}`}>{point}</p>
                                             </div>
                                         ))}
-                                    </div>
-
-                                    <div className="pt-4 flex justify-end">
-                                        <a href={exp.credentialsLink} target="_blank" rel="noopener noreferrer" className={`flex items-center gap-1 text-xs transition-colors group/btn ${styles.btn}`}>
-                                            Show Credentials
-                                            <ChevronRight className="w-3 h-3 group-hover/btn:translate-x-1 transition-transform" />
-                                        </a>
                                     </div>
                                 </div>
                             </motion.div>

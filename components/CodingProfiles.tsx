@@ -1,8 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ExternalLink } from "lucide-react";
-import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -32,20 +30,11 @@ const profiles: Profile[] = [
         color: "from-amber-600/20 to-orange-400/20",
         textColor: "text-amber-400",
         bg: "bg-white"
-    },
-    {
-        name: "GeeksforGeeks",
-        icon: "/logos/geeksforgeeks.jpg",
-        url: "https://www.geeksforgeeks.org/profile/seemayadazce2",
-        color: "from-green-500/20 to-emerald-500/20",
-        textColor: "text-green-400",
-        bg: "bg-white"
     }
 ];
 
 export default function CodingProfiles() {
     const [hoveredBlock, setHoveredBlock] = useState<number | null>(null);
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
     // Create grid blocks
     const gridBlocks = Array.from({ length: 120 }, (_, i) => i);
@@ -213,9 +202,11 @@ export default function CodingProfiles() {
 
                                     {/* Icon */}
                                     <div className={`relative w-full h-full ${['LeetCode', 'CodeChef', 'Codolio'].includes(profile.name) ? '' : 'p-2'}`}>
-                                        <img
+                                        <Image
                                             src={profile.icon}
                                             alt={profile.name}
+                                            width={128}
+                                            height={128}
                                             className={`w-full h-full object-contain ${['LeetCode', 'Codolio'].includes(profile.name) ? 'scale-150' : ''}`}
                                         />
                                     </div>

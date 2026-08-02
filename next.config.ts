@@ -23,6 +23,14 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "cdn.simpleicons.org",
       },
+      {
+        protocol: "https",
+        hostname: "headlamp.dev",
+      },
+      {
+        protocol: "https",
+        hostname: "saptarshi-coder.github.io",
+      },
     ],
   },
 };

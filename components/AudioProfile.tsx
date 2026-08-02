@@ -19,7 +19,7 @@ export default function AudioProfile() {
     }, []);
 
     const togglePlay = () => {
-        const audioFile = mode === "serious" ? "/harshita-serious-voice.mp3" : "/harshita-enthusiatic-voice.mp3";
+        const audioFile = mode === "serious" ? "/harshita-serious-voice.wav" : "/harshita-enthusiastic-voice.wav";
 
         // If audio source changes or not initialized
         if (!audioRef.current || audioRef.current.src.indexOf(audioFile) === -1) {

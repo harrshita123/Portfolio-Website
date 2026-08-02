@@ -105,7 +105,7 @@ export default function About() {
 
                             <div className="space-y-6 text-gray-300 text-lg leading-relaxed font-light">
                                 <p>
-                                    I am a motivated <span className="text-blue-500 font-bold">B.Tech Computer Science (AI & ML)</span> student.
+                                    I am a motivated second-year <span className="text-blue-500 font-bold">Integrated B.Tech in Computer Science (AI and ML)</span> student.
                                 </p>
                                 <p>
                                     Passionate about <span className="text-blue-500 font-bold">Artificial Intelligence, Machine Learning, Robotics</span>, and <span className="text-blue-500 font-bold">Full-Stack Web Development</span>, with a strong interest in building real-world, impact-driven solutions.
@@ -115,7 +115,7 @@ export default function About() {
                                 </p>
                             </div>
 
-                            <a href="https://docs.google.com/document/d/1WgBRZFvnqeVxVf3xb95B2gQiYec0SYQLzM2PNXPDB0g/edit?usp=sharing" target="_blank" rel="noopener noreferrer" className="block w-full bg-white hover:bg-gray-200 text-black font-bold py-4 rounded-lg shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_35px_rgba(255,255,255,0.6)] transition-all duration-300 text-center uppercase tracking-widest text-sm relative overflow-hidden group">
+                            <a href="/Harshita_Yadav_Resume.pdf" target="_blank" rel="noopener noreferrer" className="block w-full bg-white hover:bg-gray-200 text-black font-bold py-4 rounded-lg shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_35px_rgba(255,255,255,0.6)] transition-all duration-300 text-center uppercase tracking-widest text-sm relative overflow-hidden group">
                                 <span className="relative z-10">Resume</span>
                                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
                             </a>

@@ -4,7 +4,7 @@ import { motion, useSpring, useTransform, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 interface StatItemProps {
-    value: number;
+    value: number | null;
     label: string;
     suffix?: string;
     prefix?: string;
@@ -19,7 +19,7 @@ function StatItem({ value, label, suffix = "", prefix = "" }: StatItemProps) {
     );
 
     useEffect(() => {
-        if (isInView) {
+        if (isInView && value !== null) {
             spring.set(value);
         }
     }, [spring, value, isInView]);
@@ -33,7 +33,7 @@ function StatItem({ value, label, suffix = "", prefix = "" }: StatItemProps) {
             className="text-center"
         >
             <motion.div className="text-4xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">
-                {display}
+                {value === null ? "..." : display}
             </motion.div>
             <div className="text-white/60 text-sm mt-2">{label}</div>
         </motion.div>
@@ -42,60 +42,36 @@ function StatItem({ value, label, suffix = "", prefix = "" }: StatItemProps) {
 
 export default function AnimatedStats() {
     const [stats, setStats] = useState({
-        repos: 0,
-        contributions: 0,
-        prs: 0,
-        stars: 0
+        repos: null as number | null,
+        contributions: null as number | null,
+        prs: null as number | null,
+        issues: null as number | null,
+        stars: null as number | null
     });
 
     useEffect(() => {
         async function fetchStats() {
             try {
-                const username = 'harrshita123';
-                let newStats = { repos: 0, contributions: 0, prs: 0, stars: 0 };
-
-                // Fetch User Data & Repos
-                try {
-                    const userResponse = await fetch(`https://api.github.com/users/${username}`);
-                    if (userResponse.ok) {
-                        const userData = await userResponse.json();
-                        newStats.repos = userData.public_repos;
-                    }
-                } catch (e) { console.error(e); }
-
-                // Fetch Contributions
-                try {
-                    const contributionResponse = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}`);
-                    if (contributionResponse.ok) {
-                        const contributionData = await contributionResponse.json();
-                        const total = Object.values(contributionData.total).reduce((a: any, b: any) => a + b, 0);
-                        newStats.contributions = Number(total);
-                    }
-                } catch (e) {
-                    console.error(e);
-                    newStats.contributions = 100; // Fallback
+                const response = await fetch("/api/github-stats");
+                if (!response.ok) {
+                    throw new Error("GitHub statistics request failed");
                 }
 
-                // Fetch Stars
-                try {
-                    const starsResponse = await fetch(`https://api.github.com/search/repositories?q=user:${username}+fork:true&per_page=100`);
-                    if (starsResponse.ok) {
-                        const starsData = await starsResponse.json();
-                        const stars = starsData.items.reduce((acc: number, repo: any) => acc + repo.stargazers_count, 0);
-                        newStats.stars = stars;
-                    }
-                } catch (e) { console.error(e); }
+                const data: {
+                    totalRepos: number | null;
+                    totalContributions: number | null;
+                    totalPRs: number | null;
+                    totalIssues: number | null;
+                    totalStars: number | null;
+                } = await response.json();
 
-                // Fetch PRs
-                try {
-                    const prsResponse = await fetch(`https://api.github.com/search/issues?q=author:${username}+type:pr`);
-                    if (prsResponse.ok) {
-                        const prsData = await prsResponse.json();
-                        newStats.prs = prsData.total_count;
-                    }
-                } catch (e) { console.error(e); }
-
-                setStats(newStats);
+                setStats({
+                    repos: data.totalRepos,
+                    contributions: data.totalContributions,
+                    prs: data.totalPRs,
+                    issues: data.totalIssues,
+                    stars: data.totalStars,
+                });
             } catch (error) {
                 console.error('Error fetching stats:', error);
             }
@@ -115,6 +91,7 @@ export default function AnimatedStats() {
             <StatItem value={stats.repos} label="Repositories" suffix="+" />
             <StatItem value={stats.contributions} label="Contributions" suffix="+" />
             <StatItem value={stats.prs} label="Pull Requests" suffix="+" />
+            <StatItem value={stats.issues} label="Issues Raised" suffix="+" />
             <StatItem value={stats.stars} label="Total Stars" suffix="+" />
         </motion.div>
     );

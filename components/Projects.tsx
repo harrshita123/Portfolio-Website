@@ -1,9 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Github, ExternalLink, Code, Layers, Activity, Smartphone, Terminal, Building2, Newspaper } from "lucide-react";
+import { ExternalLink, Layers, Activity, Terminal } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import OpenSourceJourney from "./OpenSourceJourney";
 
 interface Project {
     title: string;
@@ -17,27 +18,29 @@ interface Project {
 
 const projects: Project[] = [
     {
-        title: "Local AI",
-        description: "A local AI assistant powered by advanced language models, providing privacy-focused AI capabilities without cloud dependency.",
-        link: "https://github.com/harrshita123/Local-Ai-assistant",
+        title: "Chain Lens",
+        description: "A Bitcoin transaction analyzer and visualizer that parses raw transaction data, calculates fees, classifies scripts, and presents the results clearly.",
+        link: "https://github.com/SummerOfBitcoin/2026-developer-challenge-1-chain-lens-harrshita123",
         linkText: "GitHub",
+        status: "https://chain-lens-bitcoin.vercel.app/",
         visual: (
-            <div className="w-full h-full bg-[#0a0a0a] p-4 flex flex-col justify-center gap-3 relative overflow-hidden">
-                {/* Abstract UI elements */}
-                <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-500 to-pink-500 blur-[2px]" />
-                    <div className="h-2 w-2/3 bg-white/10 rounded-full" />
-                </div>
-                <div className="flex items-center gap-2 ml-4">
-                    <div className="h-2 w-1/2 bg-white/10 rounded-full" />
-                </div>
-                <div className="flex items-center gap-2 justify-end">
-                    <div className="h-2 w-1/3 bg-white/10 rounded-full" />
-                    <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-blue-500 to-purple-500 blur-[2px]" />
-                </div>
-                <div className="flex items-center gap-2 mt-2">
-                    <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-indigo-500 to-blue-500 blur-[2px]" />
-                    <div className="h-2 w-3/4 bg-white/10 rounded-full" />
+            <div className="w-full h-full bg-[#07111f] p-6 flex items-center justify-center relative overflow-hidden">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(14,165,233,0.22),transparent_55%)]" />
+                <div className="relative z-10 w-full max-w-[250px] rounded-xl border border-cyan-400/20 bg-black/30 p-4 shadow-2xl shadow-cyan-500/10">
+                    <div className="flex items-center gap-3 mb-4">
+                        <div className="w-10 h-10 rounded-lg bg-cyan-500/15 flex items-center justify-center">
+                            <Terminal className="w-5 h-5 text-cyan-300" />
+                        </div>
+                        <div>
+                            <div className="text-white font-semibold">Chain Lens</div>
+                            <div className="text-cyan-300/60 text-[10px] uppercase tracking-widest">Bitcoin Analyzer</div>
+                        </div>
+                    </div>
+                    <div className="space-y-2 font-mono text-[10px] text-white/50">
+                        <div className="flex justify-between"><span>TXID</span><span className="text-cyan-300">b633...55a2</span></div>
+                        <div className="flex justify-between"><span>Fee rate</span><span className="text-emerald-300">7.7 sat/vB</span></div>
+                        <div className="h-1.5 rounded-full bg-white/10 overflow-hidden"><div className="h-full w-3/4 bg-gradient-to-r from-cyan-500 to-blue-500" /></div>
+                    </div>
                 </div>
             </div>
         )
@@ -61,20 +64,31 @@ const projects: Project[] = [
         )
     },
     {
-        title: "Student Attendance System",
-        description: "Automated attendance tracking system for educational institutions with real-time monitoring and analytics.",
-        link: "https://github.com/harrshita123/Attendance-system",
-        linkText: "Live Demo",
-        status: "https://student-attendance-system-uz1n.onrender.com/",
+        title: "Coin Smith",
+        description: "A safety-focused Bitcoin transaction builder with UTXO selection, fee estimation, change handling, policy validation, and PSBT generation.",
+        link: "https://github.com/SummerOfBitcoin/2026-developer-challenge-2-coin-smith-harrshita123",
+        linkText: "GitHub",
+        status: "https://coin-smith-bitcoin.vercel.app/",
         visual: (
-            <div className="w-full h-full relative overflow-hidden bg-[#0a0a0a]">
-                <Image
-                    src="/student_attendence.png"
-                    alt="Student Attendance System"
-                    fill
-                    className="object-cover opacity-90 hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+            <div className="w-full h-full bg-[#120d05] p-6 flex items-center justify-center relative overflow-hidden">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(245,158,11,0.22),transparent_55%)]" />
+                <div className="relative z-10 w-full max-w-[250px]">
+                    <div className="flex items-center justify-center gap-3 mb-5">
+                        <div className="w-12 h-12 rounded-full border border-amber-300/30 bg-amber-500/15 flex items-center justify-center text-amber-300 text-2xl font-bold">₿</div>
+                        <div>
+                            <div className="text-white text-lg font-semibold">Coin Smith</div>
+                            <div className="text-amber-300/60 text-[10px] uppercase tracking-widest">PSBT Builder</div>
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2 text-center">
+                        {[['1', 'Input'], ['2', 'Outputs'], ['5.0', 'sat/vB']].map(([value, label]) => (
+                            <div key={label} className="rounded-lg border border-amber-400/15 bg-black/25 py-2">
+                                <div className="text-amber-300 text-sm font-semibold">{value}</div>
+                                <div className="text-white/40 text-[9px] uppercase">{label}</div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </div>
         )
     },
@@ -98,113 +112,47 @@ const projects: Project[] = [
         )
     },
     {
-        title: "Open Source Project",
-        description: "A collection of open-source contributions and experimental projects showcasing various technologies and frameworks.",
-        link: "https://github.com/harrshita123/agri-climate-tracker",
+        title: "Sherlock",
+        description: "A Bitcoin chain-analysis engine and interactive visualizer for exploring blocks, transaction classifications, fee statistics, and privacy heuristics.",
+        link: "https://github.com/SummerOfBitcoin/2026-developer-challenge-3-sherlock-harrshita123",
         linkText: "GitHub",
+        status: "https://sherlock-bitcoin-analysis.vercel.app/",
         visual: (
-            <div className="w-full h-full relative overflow-hidden bg-[#0a0a0a]">
-                <Image
-                    src="/open_source_project.png"
-                    alt="Open Source Project"
-                    fill
-                    className="object-cover opacity-90 hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-            </div>
-        )
-    }
-];
-
-interface LargeProject {
-    title: string;
-    description: string;
-    github: string;
-    live?: string;
-    tags: string[];
-    visual: React.ReactNode;
-}
-
-const largeProjects: LargeProject[] = [
-    {
-        title: "GroupWallet",
-        description: "A collaborative expense management platform for groups, enabling shared wallets, expense tracking, and automated bill splitting with real-time synchronization.",
-        github: "https://github.com/harrshita123/group-wallet",
-        tags: ["fintech", "react", "nodejs", "mongodb", "real-time", "expense-tracking", "collaborative"],
-        visual: (
-            <div className="w-full h-full bg-[#050510] relative flex items-center justify-center overflow-hidden">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(34,197,94,0.1),transparent_50%)]" />
-                <div className="text-center z-10 p-8">
-                    <div className="w-20 h-20 mx-auto bg-gradient-to-tr from-green-600 to-emerald-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-green-500/20">
-                        <Layers className="text-white w-10 h-10" />
+            <div className="w-full h-full bg-[#0c0d1c] p-6 flex items-center justify-center relative overflow-hidden">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(139,92,246,0.2),transparent_58%)]" />
+                <div className="relative z-10 w-full max-w-[250px]">
+                    <div className="flex items-center gap-3 mb-4">
+                        <div className="w-10 h-10 rounded-lg bg-violet-500/15 flex items-center justify-center">
+                            <Activity className="w-5 h-5 text-violet-300" />
+                        </div>
+                        <div>
+                            <div className="text-white font-semibold">Sherlock</div>
+                            <div className="text-violet-300/60 text-[10px] uppercase tracking-widest">Chain Intelligence</div>
+                        </div>
                     </div>
-                    <h4 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-emerald-400">GroupWallet</h4>
-                    <p className="text-white/40 mt-2 text-sm">Split expenses, share wallets</p>
+                    <div className="flex items-end gap-1.5 h-14">
+                        {[35, 62, 46, 82, 54, 95, 68, 78].map((height, index) => (
+                            <div key={index} className="flex-1 rounded-t bg-gradient-to-t from-violet-700/50 to-violet-300" style={{ height: `${height}%` }} />
+                        ))}
+                    </div>
+                    <div className="mt-2 text-[9px] text-white/35 text-center uppercase tracking-[0.2em]">500 transactions analyzed</div>
                 </div>
-                {/* Floating elements */}
-                <div className="absolute -top-10 -right-10 w-40 h-40 bg-green-500/10 rounded-full blur-3xl" />
-                <div className="absolute top-10 left-10 w-2 h-2 bg-green-500 rounded-full" />
-                <div className="absolute bottom-20 right-20 w-3 h-3 bg-emerald-500 rounded-full" />
-            </div>
-        )
-    },
-    {
-        title: "User Auth System",
-        description: "A comprehensive authentication and authorization system with JWT tokens, OAuth integration, role-based access control, and secure session management for modern web applications.",
-        github: "https://github.com/harrshita123/Social-Networking-Platform",
-        live: "https://8byte-beryl.vercel.app/",
-        tags: ["authentication", "security", "JWT", "OAuth", "RBAC", "nodejs", "express", "backend"],
-        visual: (
-            <div className="w-full h-full relative overflow-hidden bg-[#0a0a0a]">
-                <Image
-                    src="/user_auth.png"
-                    alt="User Auth System"
-                    fill
-                    className="object-cover opacity-90 group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
             </div>
         )
     }
 ];
 
-const freelanceProjects: LargeProject[] = [
-    {
-        title: "Dr. Parth Portfolio",
-        description: "A professional portfolio website for Dr. Parth Sorathiya, featuring modern design, smooth animations, and comprehensive information about medical services and expertise.",
-        github: "https://github.com/harrshita123/Parth-Portfolio-website",
-        live: "https://www.parthsorathiya.com/",
-        tags: ["freelance", "portfolio", "nextjs", "framer-motion", "UI", "UX", "healthcare"],
-        visual: (
-            <div className="w-full h-full relative overflow-hidden bg-[#0a0a0a]">
-                <Image
-                    src="/dr_parth.png"
-                    alt="Dr. Parth Portfolio"
-                    fill
-                    className="object-cover opacity-90 group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-            </div>
-        )
-    },
-    {
-        title: "Portfolio Profile (Current)",
-        description: "The current portfolio website you're viewing right now! Built with Next.js 15, featuring metallic textures, 3D effects, animated gradients, and a comprehensive showcase of my work.",
-        github: "https://github.com/harrshita123/Portfolio-Website",
-        tags: ["personal", "portfolio", "nextjs", "framer-motion", "3D", "animations", "modern"],
-        visual: (
-            <div className="w-full h-full relative overflow-hidden bg-[#0a0a0a]">
-                <Image
-                    src="/portfolio.png"
-                    alt="Portfolio Website"
-                    fill
-                    className="object-cover opacity-90 group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-            </div>
-        )
-    }
-];
+const projectDisplayOrder = new Map([
+    ["News Reader UI", 0],
+    ["Chain Lens", 1],
+    ["Coin Smith", 2],
+    ["Sherlock", 3],
+    ["Smart City Dashboard", 4],
+]);
+
+const orderedProjects = [...projects].sort(
+    (a, b) => (projectDisplayOrder.get(a.title) ?? 999) - (projectDisplayOrder.get(b.title) ?? 999)
+);
 
 export default function Projects() {
     return (
@@ -233,7 +181,7 @@ export default function Projects() {
                 </motion.div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {projects.map((project, index) => (
+                    {orderedProjects.map((project, index) => (
                         <motion.div
                             key={index}
                             initial={{ opacity: 0, y: 30, scale: 0.95 }}
@@ -305,135 +253,7 @@ export default function Projects() {
                     ))}
                 </div>
 
-                {/* Large Scale Projects Section */}
-                <div className="flex flex-col items-center mb-16 space-y-4 pt-10 border-t border-white/5">
-                    <h2 className="text-4xl md:text-5xl font-bold text-white text-center">
-                        Large Scale Projects
-                    </h2>
-                </div>
-
-                <div className="flex flex-col gap-12">
-                    {largeProjects.map((project, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.1 }}
-                            className="bg-[#0a0a0a] border border-white/5 rounded-3xl overflow-hidden hover:border-white/10 transition-all duration-300 md:grid md:grid-cols-2 group"
-                        >
-                            {/* Project Visual */}
-                            <div className="h-64 md:h-full border-b md:border-b-0 md:border-r border-white/5 relative overflow-hidden min-h-[300px]">
-                                {project.visual}
-                            </div>
-
-                            {/* Project Details */}
-                            <div className="p-8 flex flex-col justify-center">
-                                <h3 className="text-2xl font-bold text-white mb-4">{project.title}</h3>
-
-                                {/* Tags */}
-                                <div className="flex flex-wrap gap-2 mb-6">
-                                    {project.tags.map((tag, i) => (
-                                        <span
-                                            key={i}
-                                            className="px-3 py-1 rounded-full text-xs font-medium bg-[#1a103c] text-purple-300 border border-purple-500/20"
-                                        >
-                                            {tag}
-                                        </span>
-                                    ))}
-                                </div>
-
-                                <p className="text-gray-400 leading-relaxed mb-8">
-                                    {project.description}
-                                </p>
-
-                                <div className="flex items-center gap-4">
-                                    <Link
-                                        href={project.github}
-                                        className="flex items-center gap-2 px-6 py-3 bg-white text-black rounded-lg font-bold hover:bg-gray-200 transition-colors"
-                                    >
-                                        <Github className="w-5 h-5" />
-                                        Github
-                                    </Link>
-                                    {project.live && (
-                                        <Link
-                                            href={project.live}
-                                            className="flex items-center gap-2 px-6 py-3 bg-[#121212] border border-white/10 text-white rounded-lg font-medium hover:bg-[#1a1a1a] transition-colors"
-                                        >
-                                            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                                            Live
-                                        </Link>
-                                    )}
-                                </div>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
-
-                {/* Freelance/UI Projects Section */}
-                <div className="flex flex-col items-center mb-16 space-y-4 pt-10 border-t border-white/5">
-                    <h2 className="text-4xl md:text-5xl font-bold text-white text-center">
-                        Freelance/UI Projects
-                    </h2>
-                </div>
-
-                <div className="flex flex-col gap-12">
-                    {freelanceProjects.map((project, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.1 }}
-                            className="bg-[#0a0a0a] border border-white/5 rounded-3xl overflow-hidden hover:border-white/10 transition-all duration-300 md:grid md:grid-cols-2 group"
-                        >
-                            {/* Project Visual */}
-                            <div className="h-64 md:h-full border-b md:border-b-0 md:border-r border-white/5 relative overflow-hidden min-h-[300px]">
-                                {project.visual}
-                            </div>
-
-                            {/* Project Details */}
-                            <div className="p-8 flex flex-col justify-center">
-                                <h3 className="text-2xl font-bold text-white mb-4">{project.title}</h3>
-
-                                {/* Tags */}
-                                <div className="flex flex-wrap gap-2 mb-6">
-                                    {project.tags.map((tag, i) => (
-                                        <span
-                                            key={i}
-                                            className="px-3 py-1 rounded-full text-xs font-medium bg-[#1a103c] text-purple-300 border border-purple-500/20"
-                                        >
-                                            {tag}
-                                        </span>
-                                    ))}
-                                </div>
-
-                                <p className="text-gray-400 leading-relaxed mb-8">
-                                    {project.description}
-                                </p>
-
-                                <div className="flex items-center gap-4">
-                                    <Link
-                                        href={project.github}
-                                        className="flex items-center gap-2 px-6 py-3 bg-white text-black rounded-lg font-bold hover:bg-gray-200 transition-colors"
-                                    >
-                                        <Github className="w-5 h-5" />
-                                        Github
-                                    </Link>
-                                    {project.live && (
-                                        <Link
-                                            href={project.live}
-                                            className="flex items-center gap-2 px-6 py-3 bg-[#121212] border border-white/10 text-white rounded-lg font-medium hover:bg-[#1a1a1a] transition-colors"
-                                        >
-                                            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                                            Live
-                                        </Link>
-                                    )}
-                                </div>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
+                <OpenSourceJourney />
 
             </div>
         </section>

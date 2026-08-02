@@ -1,12 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { GitBranch, Star, GitPullRequest, Code2, TrendingUp, Users } from "lucide-react";
-import Image from "next/image";
+import { CircleDot, GitBranch, Star, GitPullRequest, Code2, TrendingUp, Users } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { useState, useEffect } from "react";
 
 interface StatCard {
-    icon: any;
+    icon: LucideIcon;
     label: string;
     value: string;
     color: string;
@@ -14,86 +14,33 @@ interface StatCard {
 }
 
 interface GitHubStats {
-    totalStars: number;
-    totalPRs: number;
-    totalRepos: number;
-    totalContributions: number;
+    totalStars: number | null;
+    totalPRs: number | null;
+    totalIssues: number | null;
+    totalRepos: number | null;
+    totalContributions: number | null;
 }
 
 export default function GitHubStats() {
     const [githubStats, setGithubStats] = useState<GitHubStats>({
-        totalStars: 0,
-        totalPRs: 0,
-        totalRepos: 0,
-        totalContributions: 0
+        totalStars: null,
+        totalPRs: null,
+        totalIssues: null,
+        totalRepos: null,
+        totalContributions: null
     });
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         async function fetchGitHubStats() {
             try {
-                const username = 'harrshita123';
-
-                // 1. Fetch User Data
-                try {
-                    const userResponse = await fetch(`https://api.github.com/users/${username}`);
-                    if (userResponse.ok) {
-                        const userData = await userResponse.json();
-                        setGithubStats(prev => ({
-                            ...prev,
-                            totalRepos: userData.public_repos,
-                        }));
-                    } else {
-                        // Fallback for repos count
-                        const repoSearchResponse = await fetch(`https://api.github.com/search/repositories?q=user:${username}`);
-                        if (repoSearchResponse.ok) {
-                            const repoSearchData = await repoSearchResponse.json();
-                            setGithubStats(prev => ({
-                                ...prev,
-                                totalRepos: repoSearchData.total_count,
-                            }));
-                        }
-                    }
-                } catch (e) {
-                    console.error("Failed to fetch user data", e);
+                const response = await fetch("/api/github-stats");
+                if (!response.ok) {
+                    throw new Error("GitHub statistics request failed");
                 }
 
-                // 2. Fetch Contributions (using external API for accuracy)
-                try {
-                    const contributionResponse = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}`);
-                    if (contributionResponse.ok) {
-                        const contributionData = await contributionResponse.json();
-                        // Sum up contributions from all years
-                        const totalContributions = Object.values(contributionData.total).reduce((a: any, b: any) => a + b, 0);
-                        setGithubStats(prev => ({ ...prev, totalContributions: Number(totalContributions) }));
-                    }
-                } catch (e) {
-                    console.error("Failed to fetch contributions", e);
-                    setGithubStats(prev => ({ ...prev, totalContributions: 100 })); // Fallback
-                }
-
-                try {
-                    // 2. Fetch Stars using Search API (Include forks as user's starred repos are often forks)
-                    const starsResponse = await fetch(`https://api.github.com/search/repositories?q=user:${username}+fork:true&per_page=100`);
-                    if (starsResponse.ok) {
-                        const starsData = await starsResponse.json();
-                        const stars = starsData.items.reduce((acc: number, repo: any) => acc + repo.stargazers_count, 0);
-                        setGithubStats(prev => ({ ...prev, totalStars: stars }));
-                    }
-                } catch (e) {
-                    console.error("Failed to fetch stars", e);
-                }
-
-                try {
-                    // 3. Fetch PRs
-                    const prsResponse = await fetch(`https://api.github.com/search/issues?q=author:${username}+type:pr`);
-                    if (prsResponse.ok) {
-                        const prsData = await prsResponse.json();
-                        setGithubStats(prev => ({ ...prev, totalPRs: prsData.total_count }));
-                    }
-                } catch (e) {
-                    console.error("Failed to fetch PRs", e);
-                }
+                const data: GitHubStats = await response.json();
+                setGithubStats(data);
 
                 setLoading(false);
             } catch (error) {
@@ -105,32 +52,41 @@ export default function GitHubStats() {
         fetchGitHubStats();
     }, []);
 
+    const formatStat = (value: number | null) => value === null ? "..." : `${value.toLocaleString()}+`;
+
     const stats: StatCard[] = [
         {
             icon: Star,
             label: "Total Stars",
-            value: loading ? "..." : `${githubStats.totalStars}+`,
+            value: loading ? "..." : formatStat(githubStats.totalStars),
             color: "text-yellow-400",
             bgColor: "bg-yellow-500/10"
         },
         {
             icon: GitPullRequest,
             label: "Pull Requests",
-            value: loading ? "..." : `${githubStats.totalPRs}+`,
+            value: loading ? "..." : formatStat(githubStats.totalPRs),
             color: "text-purple-400",
             bgColor: "bg-purple-500/10"
         },
         {
+            icon: CircleDot,
+            label: "Issues Raised",
+            value: loading ? "..." : formatStat(githubStats.totalIssues),
+            color: "text-orange-400",
+            bgColor: "bg-orange-500/10"
+        },
+        {
             icon: GitBranch,
             label: "Repositories",
-            value: loading ? "..." : `${githubStats.totalRepos}+`,
+            value: loading ? "..." : formatStat(githubStats.totalRepos),
             color: "text-blue-400",
             bgColor: "bg-blue-500/10"
         },
         {
             icon: Users,
             label: "Contributions",
-            value: loading ? "..." : `${githubStats.totalContributions}+`,
+            value: loading ? "..." : formatStat(githubStats.totalContributions),
             color: "text-green-400",
             bgColor: "bg-green-500/10"
         }
@@ -158,7 +114,7 @@ export default function GitHubStats() {
                 </motion.div>
 
                 {/* Stats Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12">
+                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4 md:gap-6 mb-12">
                     {stats.map((stat, index) => (
                         <motion.div
                             key={index}
